@@ -1,6 +1,11 @@
 # AutoNova
 
-Voice, chat, and avatar AI agents built on a liquid-metal interactive canvas.
+A web interface for AutoNova — an AI-powered web system that builds full
+websites and business systems that move businesses forward and enhance how
+they operate.
+
+**V1 scope:** the AutoNova web system. Voice and chat agents come in later
+versions.
 
 ## Building this project
 
