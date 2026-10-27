@@ -1,1 +1,7 @@
-/* Build agent entry point — build agent may replace this file. */
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+

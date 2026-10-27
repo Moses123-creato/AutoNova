@@ -1,0 +1,106 @@
+AGENT BRIEF: MAKE EVERY REACT COMPONENT RENDER INSTANTLY ON ANY NETWORK / DEVICE
+================================================================================
+
+GOAL
+Every React component on the site must show its content immediately, even on
+slow networks, weak phones, and any screen orientation. Effects upgrade only
+when the device and network can handle them.
+DO NOT change the visual design. Only change how and when things load/render.
+
+TASK
+Audit each component, classify it by category (see table), apply the matching
+fixes, and give a per-component before/after report.
+
+CATEGORIES AND TYPICAL PROBLEMS
+- Backgrounds (canvas/WebGL): heavy JS + GPU, slow first frame
+    -> poster-first, lazy mount, quality scaling
+- Text animations: text hidden (opacity:0) until JS runs, page looks blank
+    -> text must be visible in server HTML; animate afterward
+- Animations / micro interactions: big animation libs loaded up front
+    -> CSS-first, load the library on first interaction
+- Components (cards, galleries): big images, layout shift
+    -> sized images, srcset, lazy loading
+
+--------------------------------------------------------------------------------
+STRATEGY 1: SHIP REAL HTML FIRST (SSG / SSR + STREAMING)
+--------------------------------------------------------------------------------
+- Static-generate everything that does not change per request.
+- Use SSR with streaming for dynamic parts.
+- Next.js: Server Components by default. Add "use client" only where state or
+  browser APIs are needed.
+- Wrap slow sections in <Suspense fallback={<Skeleton />}> so the shell paints
+  immediately.
+- Serve from a CDN edge with long-lived immutable cache headers on hashed assets.
+- Hydrate only interactive parts (islands / selective hydration). Static markup
+  stays unhydrated.
+- ACCEPTANCE: with JavaScript disabled, the full layout and main content still
+  show.
+
+--------------------------------------------------------------------------------
+STRATEGY 2: POSTER-FIRST, THEN UPGRADE (FOR HEAVY VISUALS)
+--------------------------------------------------------------------------------
+Applies to canvas, WebGL, GSAP, video, 3D, background effects.
+
+- Render a lightweight placeholder in the exact same box immediately: a
+  pre-rendered image (WebP/AVIF), CSS gradient, or inline SVG. Reserve size
+  with aspect-ratio so there is no layout shift.
+- Load the live component only after the page is interactive:
+    next/dynamic(() => import(...), { ssr: false })  or  React.lazy
+  triggered by IntersectionObserver (in view) or requestIdleCallback (idle).
+- Cross-fade from poster to live component after its first frame is drawn.
+- Degradation ladder:
+    High-end device  -> full effect
+    Mid-range        -> reduced particles / resolution
+    Low-end, navigator.connection.saveData on, effectiveType 2g/3g,
+    prefers-reduced-motion, low deviceMemory / hardwareConcurrency
+                     -> static poster only
+- Pause or destroy the animation loop when off-screen or when the tab is hidden.
+- Cap devicePixelRatio: Math.min(dpr, 2); lower on weak devices.
+- Handle orientation/resize with ResizeObserver + debounce, never on every
+  resize event.
+- Limit live effects per page. Browsers cap WebGL contexts (~16). Mount an
+  effect only while in view and unmount when it leaves. Share one WebGL
+  context where possible.
+
+--------------------------------------------------------------------------------
+STRATEGY 3: CUT AND DEFER JAVASCRIPT
+--------------------------------------------------------------------------------
+- Run a bundle analyzer (@next/bundle-analyzer or vite-bundle-visualizer).
+  Remove or replace heavy libraries.
+- Import only tree-shakable named exports. No whole-library or barrel imports.
+- Code-split everything below the fold, plus modals, tabs, charts.
+- Preload only critical assets: LCP image and hero font
+  (<link rel="preload">, font-display: swap, self-hosted subset fonts).
+  Use priority on the LCP next/image.
+- Enable Brotli compression.
+- Add a service worker (Workbox) to cache shell + assets for repeat visits and
+  flaky networks.
+
+--------------------------------------------------------------------------------
+EXTRA RULES (REQUIRED)
+--------------------------------------------------------------------------------
+1. NEVER HIDE CONTENT UNTIL JS RUNS. Default state is visible. Apply animation
+   start states only after hydration, or use CSS animations / @starting-style so
+   the no-JS result is the final result.
+2. KEEP THE MAIN THREAD FREE. No long tasks over 50ms at load. Defer third-party
+   scripts, analytics, and fonts not needed for first paint. Move heavy
+   computation to a Web Worker or OffscreenCanvas.
+3. IMAGES: use AVIF/WebP, explicit width/height, loading="lazy" below the fold,
+   srcset/sizes for responsive delivery.
+4. RESILIENCE: wrap each live component in an error boundary so one failure does
+   not blank the page. Add a timeout fallback to the poster if a chunk fails
+   to load.
+
+--------------------------------------------------------------------------------
+VERIFICATION (REQUIRED BEFORE FINISHING)
+--------------------------------------------------------------------------------
+- Lighthouse mobile with Slow 4G + 4x CPU throttle.
+- Chrome DevTools "Slow 3G" preset.
+- Test on a real low-end Android phone with throttled network.
+- Test portrait and landscape at 360x640 and 844x390.
+- Targets: LCP < 2.5s, CLS < 0.1, INP < 200ms, TBT < 200ms.
+- Report before/after numbers per page and per component.
+
+NOTE: "Instant in every edge case" cannot be guaranteed. The guarantee is a
+floor: content is always visible immediately, and effects upgrade only when
+the device and network can handle them.

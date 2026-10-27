@@ -1,10 +1,31 @@
+import dynamic from "next/dynamic";
+
+import { Navbar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
+import { PerformanceResults } from "@/components/performance-results";
+import { SyncSection } from "@/components/sync-section";
+
+// Below the fold and heavy, so it gets its own chunk. It is still server
+// rendered, so the dashboard frame is in the HTML before any JavaScript runs.
+const DashboardSection = dynamic(() => import("@/components/dashboard-section"), {
+  loading: () => <div className="h-screen w-full bg-[#050505]" aria-hidden="true" />
+});
+
+const ServicesSection = dynamic(() => import("@/components/services-section"), {
+  loading: () => <div className="h-screen w-full bg-[#020617]" aria-hidden="true" />
+});
+
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-4 p-8 text-center">
-      <h1 className="text-3xl font-semibold tracking-tight">Home</h1>
-      <p className="max-w-md text-muted-foreground">
-        Build agent entry point. Replace with the site homepage.
-      </p>
-    </main>
+    <div className="relative min-h-screen bg-[#030507] text-[#E4E9F4] selection:bg-[#1550B8] selection:text-white">
+      <Navbar />
+      <main id="main-content">
+        <Hero />
+        <PerformanceResults />
+        <ServicesSection />
+        <SyncSection />
+        <DashboardSection />
+      </main>
+    </div>
   );
 }

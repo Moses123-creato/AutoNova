@@ -1,0 +1,176 @@
+.sh-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.sh-sticky {
+  position: sticky;
+  width: 100%;
+}
+
+.sh-stage {
+  --card: clamp(96px, 17vw, 180px);
+  --gap: calc(var(--card) * 0.26);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #020617;
+  color: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  isolation: isolate;
+}
+
+/* gradient backdrop: dark navy base, bright blue bloom top-left, soft bloom right */
+.sh-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(60% 55% at 0% 0%, rgba(37, 99, 235, 0.9) 0%, rgba(30, 64, 175, 0.35) 42%, transparent 70%),
+    radial-gradient(45% 50% at 100% 55%, rgba(29, 78, 216, 0.7) 0%, rgba(30, 64, 175, 0.26) 45%, transparent 75%),
+    radial-gradient(70% 45% at 50% 28%, rgba(59, 130, 246, 0.16) 0%, transparent 70%),
+    linear-gradient(180deg, #030a22 0%, #020617 60%, #01040f 100%);
+}
+
+.sh-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 75%);
+}
+
+/* carousel track: the active card is always centered via --t */
+.sh-track {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  display: flex;
+  gap: var(--gap);
+  margin-left: calc(var(--card) / -2);
+  transform: translate(calc(var(--t) * (var(--card) + var(--gap)) * -1), -50%);
+  will-change: transform;
+}
+
+.sh-card {
+  flex: 0 0 var(--card);
+  height: var(--card);
+  display: grid;
+  place-items: center;
+  border-radius: calc(var(--card) * 0.2);
+  background: linear-gradient(160deg, rgba(59, 130, 246, 0.22), rgba(30, 64, 175, 0.08));
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.25), inset 0 0 24px rgba(59, 130, 246, 0.12);
+  backdrop-filter: blur(6px);
+  will-change: transform, opacity;
+}
+
+.sh-glyph {
+  width: 42%;
+  height: 42%;
+  fill: none;
+  stroke: rgba(147, 197, 253, 0.55);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The icon SVG's visible card is ~66% of its box, so size it to 1.15x a card */
+.sh-icon {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: calc(var(--card) * 1.75);
+  height: calc(var(--card) * 1.75);
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+  filter: drop-shadow(0 0 30px rgba(37, 99, 235, 0.55));
+}
+
+.sh-hand {
+  position: absolute;
+  left: 50%;
+  top: calc(30% + var(--card) * 0.5);
+  height: 62%;
+  width: auto;
+  transform-origin: 47% 0;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+/* darkens the lower area so the headline stays readable over the hand */
+.sh-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(2, 6, 23, 0.55) 55%, rgba(2, 6, 23, 0.85));
+}
+
+.sh-title {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  z-index: 2;
+  width: min(92%, 980px);
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: clamp(28px, 5.4vw, 68px);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  min-height: 2.2em;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.sh-title-in {
+  display: inline-block;
+  background: linear-gradient(180deg, #ffffff 30%, #9ccbff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 40px rgba(59, 130, 246, 0.45);
+  animation: sh-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.sh-title-in.from-left {
+  --from: -48px;
+}
+.sh-title-in.from-right {
+  --from: 48px;
+}
+
+@keyframes sh-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--from, 48px));
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-title-in {
+    animation: none;
+  }
+}

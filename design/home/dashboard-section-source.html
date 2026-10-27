@@ -1,0 +1,148 @@
+<!-- ============ ANIMATED DASHBOARD SECTION (drop into your landing page) ============ -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+.ed *{box-sizing:border-box;margin:0}
+.ed{position:relative;height:320vh;background:#050505;font-family:Inter,system-ui,sans-serif;color:#fff}
+.ed-stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;perspective:1600px}
+.ed-head{text-align:center;padding:0 16px;z-index:2}
+.ed-head small{font-size:11px;letter-spacing:.12em;color:#71717A;font-weight:600}
+.ed-head h2{font-size:clamp(24px,3.4vw,40px);letter-spacing:-.02em;margin-top:8px}
+.ed-wrap{width:100%;display:flex;justify-content:center;align-items:flex-start}
+.ed-frame{width:1180px;flex:none;transform-origin:top center;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:#0A0A0A;box-shadow:0 40px 120px rgba(59,130,246,.18),0 0 0 1px rgba(255,255,255,.03);overflow:hidden;will-change:transform,opacity}
+.ed-bar{height:34px;background:#0E0E0E;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:6px;padding:0 14px}
+.ed-bar i{width:9px;height:9px;border-radius:50%;background:#2a2a2a}
+.ed-body{display:flex}
+.ed-side{width:200px;flex:none;background:#0E0E0E;border-right:1px solid rgba(255,255,255,.08);padding:16px;display:flex;flex-direction:column;gap:14px;font-size:12px}
+.ed-brand{display:flex;gap:10px;align-items:center}
+.ed-logo{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);display:grid;place-items:center}
+.ed-brand b{font-size:13px;display:block}.ed-brand span{font-size:9px;letter-spacing:.14em;color:#71717A}
+.ed-act{background:rgba(255,255,255,.06);border-radius:8px;padding:8px 10px;display:flex;gap:8px;align-items:center;font-weight:500}
+.ed-grp{font-size:10px;letter-spacing:.1em;color:#71717A;font-weight:600;margin-top:10px}
+.ed-user{margin-top:auto;display:flex;gap:8px;align-items:center;padding:8px;border-radius:10px;background:rgba(255,255,255,.04)}
+.ed-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#06B6D4);display:grid;place-items:center;font-size:10px;font-weight:600}
+.ed-main{flex:1;min-width:0;padding:18px;display:flex;flex-direction:column;gap:14px}
+.ed-top{display:flex;justify-content:space-between;align-items:center}
+.ed-top h3{font-size:17px}.ed-top p{font-size:12px;color:#71717A;margin-top:2px}
+.ed-btns{display:flex;gap:8px}.ed-btn{height:30px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,255,255,.14);font-size:12px;display:flex;align-items:center;gap:6px}
+.ed-btn.p{background:#3B82F6;border-color:#3B82F6}
+.ed-card{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.ed-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ed-k{display:flex;justify-content:space-between}
+.ed-k small,.ed-lbl{font-size:10px;letter-spacing:.08em;color:#71717A;font-weight:600}
+.ed-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center}
+.ed-n{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-top:10px;font-variant-numeric:tabular-nums;line-height:1}
+.ed-sub{font-size:11px;color:#71717A;margin-top:6px}
+.ed-row{display:grid;grid-template-columns:1.1fr 1.4fr 1fr;gap:12px}
+.ed-card h4{font-size:14px;margin-bottom:10px}
+.ed-pills{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.ed-pill{padding:8px 10px;border-radius:10px;font-size:10px;color:#adaaaa}.ed-pill b{display:block;font-size:17px;margin-top:2px}
+.ed-chart{height:100px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 6px;border-bottom:1px solid rgba(255,255,255,.1);background:repeating-linear-gradient(to bottom,transparent 0 24px,rgba(255,255,255,.06) 24px 25px)}
+.ed-bg{display:flex;gap:4px;align-items:flex-end;height:100%}
+.ed-bg u{width:10px;border-radius:2px 2px 0 0;display:block;transform-origin:bottom;transform:scaleY(0)}
+.ed-days{display:flex;justify-content:space-between;padding:6px;font-size:10px;color:#71717A}
+.ed-gauge{position:relative;display:flex;justify-content:center}
+.ed-gnum{position:absolute;bottom:0;text-align:center;font-size:34px;font-weight:700;line-height:1}.ed-gnum small{display:block;font-size:11px;color:#71717A;font-weight:500;margin-top:3px}
+.ed-m{display:flex;align-items:center;gap:8px;height:34px;border-top:1px solid rgba(255,255,255,.08);font-size:11px}
+.ed-m em{font-style:normal;width:112px}.ed-m .t{flex:1;height:5px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.ed-m .t i{display:block;height:100%;border-radius:9px;width:0}.ed-m b{width:20px;text-align:right}
+.ed table{color:#fff;font-family:inherit;width:100%;border-collapse:collapse;font-size:12px}
+.ed th{font-size:10px;letter-spacing:.08em;color:#71717A;text-align:left;padding:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ed td{padding:9px 8px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ed tr.r{opacity:0;transform:translateX(-24px)}
+.ed .mono{font-family:'JetBrains Mono',monospace}.ed .rt{text-align:right}
+.ed .tag{padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.ed .mi{display:inline-block;width:17px;height:17px;vertical-align:-3px;font-size:0;line-height:0}.ed .mi svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.g{color:#69f6b8}.rd{color:#ff716c}.am{color:#ffb148}.bl{color:#3B82F6}.cy{color:#22d3ee}.pu{color:#c084fc}
+@media(max-width:700px){.ed{height:260vh}.ed-side{display:none}}
+@media(prefers-reduced-motion:reduce){.ed{height:auto}.ed-stage{position:static;height:auto;padding:48px 0}}
+</style>
+
+<section class="ed" id="ed">
+ <div class="ed-stage">
+  <div class="ed-head"><small>LIVE INVENTORY INTELLIGENCE</small><h2>See your whole stock room in one screen</h2></div>
+  <div class="ed-wrap" id="edwrap">
+  <div class="ed-frame" id="edframe">
+   <div class="ed-bar"><i></i><i></i><i></i></div>
+   <div class="ed-body">
+    <aside class="ed-side">
+     <div class="ed-brand"><div class="ed-logo"><span class="mi">inventory_2</span></div><div><b>Ella</b><span>INVENTORY</span></div></div>
+     <div class="ed-act"><span class="mi">dashboard</span>Overview</div>
+     <div class="ed-grp">CATALOG</div><div class="ed-grp">STOCK</div><div class="ed-grp">SALES</div><div class="ed-grp">ANALYTICS</div><div class="ed-grp">SYSTEM</div>
+     <div class="ed-user"><div class="ed-av">AM</div><div><div style="font-size:11px;font-weight:500">Amara Mensah</div><div style="font-size:10px;color:#71717A">amara@ella.io</div></div></div>
+    </aside>
+    <div class="ed-main">
+     <div class="ed-top"><div><h3>Overview</h3><p>Live fashion inventory intelligence.</p></div>
+      <div class="ed-btns"><div class="ed-btn"><span class="mi g">south_west</span>Stock In</div><div class="ed-btn"><span class="mi rd">north_east</span>Stock Out</div><div class="ed-btn p"><span class="mi">add</span>Product</div></div></div>
+     <div class="ed-kpis">
+      <div class="ed-card"><div class="ed-k"><small>TOTAL PRODUCTS</small><div class="ed-ic" style="background:rgba(59,130,246,.1)"><span class="mi bl">apparel</span></div></div><div class="ed-n"><span data-to="1246" data-fmt="n">0</span></div><div class="ed-sub">across 6 categories</div></div>
+      <div class="ed-card"><div class="ed-k"><small>LOW STOCK</small><div class="ed-ic" style="background:rgba(245,158,11,.1)"><span class="mi am">warning</span></div></div><div class="ed-n am"><span data-to="34">0</span></div><div class="ed-sub">need replenishment</div></div>
+      <div class="ed-card"><div class="ed-k"><small>ACTIVE SUPPLIERS</small><div class="ed-ic" style="background:rgba(6,182,212,.1)"><span class="mi cy">local_shipping</span></div></div><div class="ed-n"><span data-to="9">0</span></div><div class="ed-sub">3 pending orders</div></div>
+      <div class="ed-card"><div class="ed-k"><small>INVENTORY VALUE</small><div class="ed-ic" style="background:rgba(105,246,184,.1)"><span class="mi g">account_balance_wallet</span></div></div><div class="ed-n">₦<span data-to="218.6" data-dec="1">0</span>M</div><div class="ed-sub g"><span class="mi" style="width:13px;height:13px;vertical-align:-2px">trending_up</span> +9.4% vs last month</div></div>
+     </div>
+     <div class="ed-row">
+      <div class="ed-card" style="display:flex;flex-direction:column;justify-content:space-between">
+       <div><h4>Quick Restock</h4><div class="ed-lbl" style="margin-bottom:10px">PRIMARY VENDORS</div>
+        <div style="display:flex">
+         <div class="ed-av" style="background:#1e293b;margin-right:-6px;border:2px solid #111">AM</div><div class="ed-av" style="background:#27272a;margin-right:-6px;border:2px solid #111">ST</div><div class="ed-av" style="background:#134e4a;margin-right:-6px;border:2px solid #111">LA</div><div class="ed-av" style="background:#3730a3;border:2px solid #111">SR</div></div>
+        <div style="margin-top:14px;padding:10px;border-radius:8px;background:#181818;border:1px solid rgba(255,255,255,.08);font-size:11px;color:#A1A1AA;display:flex;justify-content:space-between">Automated MOQ replenishment<span class="g mono" style="font-size:10px">OPTIMIZED</span></div></div>
+       <div style="display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)"><div class="mono" style="flex:1;height:36px;border-radius:10px;background:#181818;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 12px;font-size:12px">₦ 4,250,000</div><div style="height:36px;padding:0 14px;border-radius:10px;background:#FAFAFA;color:#0A0A0A;font-weight:600;font-size:12px;display:flex;align-items:center;gap:5px"><span class="mi" style="width:15px;height:15px">bolt</span>Restock</div></div>
+      </div>
+      <div class="ed-card"><h4>Stock Movement</h4>
+       <div class="ed-pills"><div class="ed-pill" style="background:rgba(105,246,184,.1);border:1px solid rgba(105,246,184,.2)">STOCK IN<b class="g">+<span data-to="842" data-fmt="n">0</span></b></div><div class="ed-pill" style="background:rgba(255,113,108,.1);border:1px solid rgba(255,113,108,.2)">STOCK OUT<b class="rd">-<span data-to="1206" data-fmt="n">0</span></b></div></div>
+       <div class="ed-chart" id="edchart"></div><div class="ed-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      </div>
+      <div class="ed-card"><h4><span class="mi bl" style="vertical-align:-4px">monitor_heart</span> Inventory Health</h4>
+       <div class="ed-gauge"><svg width="170" height="96" viewBox="0 0 160 90"><defs><linearGradient id="edg" x1="0" x2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><path d="M20 80A60 60 0 0 1 140 80" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10" stroke-linecap="round"/><path id="edarc" d="M20 80A60 60 0 0 1 140 80" fill="none" stroke="url(#edg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5"/></svg><div class="ed-gnum"><span data-to="78">0</span><small>Good</small></div></div>
+       <div id="edm"></div>
+      </div>
+     </div>
+     <div class="ed-card"><h4>Recent Stock Movements</h4>
+      <table><thead><tr><th>PRODUCT</th><th>SKU</th><th>TYPE</th><th class="rt">QUANTITY</th><th class="rt">VALUE</th><th class="rt">DATE</th></tr></thead><tbody id="edrows"></tbody></table></div>
+    </div>
+   </div>
+  </div></div>
+ </div>
+</section>
+
+<script>
+(function(){
+ var root=document.getElementById('ed'),frame=document.getElementById('edframe'),wrap=document.getElementById('edwrap');
+ var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var IC={inventory_2:"M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8",dashboard:"M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z",apparel:"M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z",dry_cleaning:"M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z",styler:"M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z",checkroom:"M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z",female:"M12 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM12 13v8M9 18h6",warning:"M12 3l10 18H2zM12 10v5M12 18h.01",local_shipping:"M1 6h13v11H1zM14 9h4l4 4v4h-8zM6 19a2 2 0 1 0 .01 0M18 19a2 2 0 1 0 .01 0",account_balance_wallet:"M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l2-3h12M16 14h3",account_balance:"M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18",trending_up:"M3 17l6-6 4 4 8-8M15 7h6v6",bolt:"M13 2L4 14h7l-1 8 9-12h-7z",south_west:"M18 6L6 18M6 9v9h9",north_east:"M6 18L18 6M9 6h9v9",monitor_heart:"M3 12h4l3-7 4 14 3-7h4",shopping_cart:"M3 4h3l3 12h10l2-8H7M10 21h.01M18 21h.01",straighten:"M3 8h18v8H3zM7 8v4M11 8v3M15 8v4M19 8v3",security:"M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z",assignment:"M8 4h8v3H8zM6 5H5v16h14V5h-1M9 12h6M9 16h6",add:"M12 5v14M5 12h14"};
+ function icons(){[].slice.call(root.querySelectorAll('.mi:not([data-d])')).forEach(function(e){var n=e.textContent.trim();e.dataset.d=1;e.innerHTML='<svg viewBox="0 0 24 24"><path d="'+(IC[n]||'')+'"/></svg>'})}
+ // --- build data-driven pieces
+ var bars=[[65,40],[80,55],[45,70],[90,60],[75,85],[50,45],[35,30]],ch=document.getElementById('edchart');
+ bars.forEach(function(b){ch.insertAdjacentHTML('beforeend','<div class="ed-bg"><u style="height:'+b[0]+'%;background:#FAFAFA"></u><u style="height:'+b[1]+'%;background:#3F3F46"></u></div>')});
+ var meters=[['Stock Coverage',85,'#69f6b8','account_balance'],['Sell-Through Rate',72,'#3B82F6','shopping_cart'],['Size Range Coverage',90,'#c084fc','straighten'],['Stockout Risk',68,'#ffb148','security'],['Supplier Reliability',55,'#22d3ee','assignment']],m=document.getElementById('edm');
+ meters.forEach(function(x){m.insertAdjacentHTML('beforeend','<div class="ed-m"><span class="mi" style="color:'+x[2]+'">'+x[3]+'</span><em>'+x[0]+'</em><div class="t"><i data-w="'+x[1]+'" style="background:'+x[2]+'"></i></div><b>'+x[1]+'</b></div>')});
+ var rows=[['Ankara Wrap Maxi Dress','Ankara','pu','dry_cleaning','AD-2201','In','+48','₦888,000','Apr 10, 2026'],['Satin Evening Gown','Evening Wear','rd','styler','EG-4477','Out','-6','₦372,000','Apr 09, 2026'],['Adire Print Two-Piece','Traditional','g','checkroom','AT-3310','In','+86','₦2,365,000','Apr 08, 2026'],['Chop & Sew Blazer','Tailored','bl','checkroom','CB-1189','Out','-4','₦380,000','Apr 08, 2026'],['Pleated Midi Skirt','Separates','cy','female','PM-7752','In','+64','₦1,024,000','Apr 07, 2026']],tb=document.getElementById('edrows');
+ rows.forEach(function(r){var i=r[5]=='In';tb.insertAdjacentHTML('beforeend','<tr class="r"><td><div style="display:flex;gap:10px;align-items:center"><span class="mi '+r[2]+'">'+r[3]+'</span><div><div style="font-weight:600;font-size:12px">'+r[0]+'</div><span class="'+r[2]+'" style="font-size:10px">'+r[1]+'</span></div></div></td><td class="mono" style="color:#71717A">'+r[4]+'</td><td><span class="tag '+(i?'g':'rd')+'" style="background:'+(i?'rgba(105,246,184,.15)':'rgba(255,113,108,.15)')+'">Stock '+r[5]+'</span></td><td class="rt mono '+(i?'g':'rd')+'">'+r[6]+'</td><td class="rt mono">'+r[7]+'</td><td class="rt" style="color:#71717A">'+r[8]+'</td></tr>')});
+ icons();
+ // --- animation
+ var nums=[].slice.call(root.querySelectorAll('[data-to]')),us=[].slice.call(root.querySelectorAll('.ed-bg u')),fills=[].slice.call(root.querySelectorAll('[data-w]')),trs=[].slice.call(root.querySelectorAll('tr.r')),arc=document.getElementById('edarc');
+ function c(v){return Math.max(0,Math.min(1,v))}
+ function seg(p,a,b){return c((p-a)/(b-a))}
+ function ease(t){return 1-Math.pow(1-t,3)}
+ function render(p){
+  var f=ease(seg(p,0,.22));
+  frame.style.opacity=.15+.85*f;
+  frame.style.transform='rotateX('+(26*(1-f))+'deg) translateY('+(60*(1-f))+'px) scale('+(fit*(.88+.12*f))+')';
+  var k=ease(seg(p,.16,.4));
+  nums.forEach(function(n){var to=+n.dataset.to,d=+n.dataset.dec||0,v=to*k;n.textContent=n.dataset.fmt?Math.round(v).toLocaleString('en-US'):v.toFixed(d)});
+  var b=seg(p,.3,.52);us.forEach(function(u,i){u.style.transform='scaleY('+ease(c(b*1.6-i*.06))+')'});
+  arc.style.strokeDashoffset=188.5-(188.5-41.5)*ease(seg(p,.38,.6));
+  var mt=seg(p,.5,.7);fills.forEach(function(e,i){e.style.width=(+e.dataset.w*ease(c(mt*1.5-i*.12)))+'%'});
+  var r=seg(p,.62,.92);trs.forEach(function(t,i){var q=ease(c(r*2-i*.28));t.style.opacity=q;t.style.transform='translateX('+(-24*(1-q))+'px)'});
+ }
+ var fit=1;
+ function size(){var mob=innerWidth<=700,W=mob?1180-200:1180;frame.style.width=W+'px';fit=Math.min(1,(wrap.clientWidth-24)/W,(innerHeight-150)/frame.offsetHeight);wrap.style.height=(frame.offsetHeight*fit)+'px';tick()}
+ function tick(){
+  if(reduce){render(1);return}
+  var r=root.getBoundingClientRect(),t=r.height-innerHeight;render(c(-r.top/t))
+ }
+ var q=0;addEventListener('scroll',function(){if(!q)q=requestAnimationFrame(function(){q=0;tick()})},{passive:true});
+ addEventListener('resize',size);
+ (document.fonts&&document.fonts.ready||Promise.resolve()).then(size);size();
+})();
+</script>

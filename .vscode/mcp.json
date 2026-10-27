@@ -1,0 +1,7 @@
+{
+  "servers": {
+    "stitch": {
+      "url": "https://stitch.withgoogle.com/mcp"
+    }
+  }
+}

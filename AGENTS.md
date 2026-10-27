@@ -45,7 +45,7 @@ The contact form needs to eventually do something real, but the delivery mechani
 
 The loop, every time:
 
-1. Read this file, then `AGENTS.md`, then any skills (section 5), then `sync/build.md` — know where the project stands before you move.
+1. Read this file, then `AGENTS.md`, then any skills (section 5), then `sync/progress.md` — know where the project stands before you move.
 2. Explore the codebase first, before you assume how anything is shaped. Look at `package.json`, `components.json`, `src/`, the components under `src/components/ui/`, `globals.css`, and the route files. Understand the stack with your own eyes, not from memory.
 3. Ask one focused question only if the task is genuinely ambiguous. One. Do not interrogate me.
 4. Write an implementation prompt in `prompts/`: the goal, the skills you read, the code you inspected, your decisions and assumptions, the files you expect to touch, the requirements, the security considerations, the acceptance criteria, the checks to run, and the exact manual test steps. The prompt is the contract between us.
@@ -98,14 +98,14 @@ Boundaries you must respect:
 This project runs on paperwork, and the paperwork is yours. The folders below are part of every build: you populate and maintain them as you go, and you never leave them empty or expect me to document your work. If you finish a build and these folders are untouched, the build is not finished.
 
 - **`skills/`** — the "how we do things here" files. Follow what is in there (start with `architecture-skill.md`), and write a new skill whenever a repeatable pattern proves itself and is not yet written down.
-- **`sync/`** — the build record. `sync/build.md` says what is built, what is in progress, and exactly where the work stops. Read it before you start anything; update it as you work and when you finish. This is how a new agent picks up the project without re-reading everything.
+- **`sync/`** — the build record. `sync/progress.md` says what is built, what is in progress, and exactly where the work stops. Read it before you start anything; update it as you work and when you finish. This is how a new agent picks up the project without re-reading everything.
 - **`debug/`** — every error you hit and fix gets logged in `debug/errors-log.md` with the cause and the fix, newest first. If you fixed it and did not log it, the build is not done.
-- **`architect/`** — architecture design specs. When a build changes the structure of the app — new routes, new data flow, components with real scope — write the spec first (or update the existing one), following `skills/architecture-skill.md`, and keep it in step with `sync/build.md`.
+- **`architect/`** — architecture design specs. When a build changes the structure of the app — new routes, new data flow, components with real scope — write the spec first (or update the existing one), following `skills/architecture-skill.md`, and keep it in step with `sync/progress.md`.
 - **`documents/`** — documentation of everything done: what was built, how it works, and the decisions behind it. Written by the agent after every page or feature.
-- **`design/`** — my design references, one folder per page (`design/home/`, `design/services/`, `design/about/`, `design/contact/`). You build from these exactly; you never design. If a page's folder is empty, stop and ask me for the design.
+- **`design/`** — my design references, one folder per page (`design/home/`, `design/services/`, `design/about/`, `design/contact/`). You build from these exactly; you never design. If a page's folder is empty, stop and ask me for the design. Each page folder also carries a `<page>-spec.md`: a spec of what is actually built on that page, linked to the reference images it was built from — the ones still in use, not ones since removed — plus what was removed and why. Write it after every build to that page.
 - **`prompts/`** — two kinds of prompt live here: the implementation prompt you write and get approved before building (section 3), and the page prompt record you write after finishing each page (`prompts/<page>.md`) with the prompt or instructions that page was built from.
 
-The rule, plainly: after building each page, you update `sync/build.md`, write the page's prompt record into `prompts/`, log any errors you hit into `debug/`, document the work in `documents/`, and update `architect/` if the structure changed. Every time. Then you report.
+The rule, plainly: after building each page, you update `sync/progress.md`, write the page's prompt record into `prompts/`, log any errors you hit into `debug/`, document the work in `documents/`, and update `architect/` if the structure changed. Every time. Then you report.
 
 ## 8. Tech stack
 
@@ -157,7 +157,7 @@ When a stage opens, I update this file and we go through the normal loop.
 - **`pnpm-workspace.yaml` exists but is not a monorepo setup** — it only carries build allowlist entries from the scaffold. Do not assume a workspace layout, and do not delete files you do not understand.
 - **Secrets.** Never put a token or key in client code, and never commit real secrets. `.env.example` is committed; `.env` is not.
 - **The contact form does not send yet.** Do not pretend it does. The server route is a stub until I decide the provider.
-- **The paperwork folders are mandatory.** An untouched `sync/build.md` or a page with no prompt record means an unfinished build, no matter how good the code looks.
+- **The paperwork folders are mandatory.** An untouched `sync/progress.md` or a page with no prompt record means an unfinished build, no matter how good the code looks.
 - **Two instruction files.** `AGENTS.md` (Next.js's regenerated rules) and this one. Read both. This file sets scope; `AGENTS.md` sets Next.js ground rules.
 
 ## 12. Checks to run

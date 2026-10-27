@@ -1,6 +1,6 @@
 # documents
 
-Everything that gets done on this project gets documented here. Not the running record (that is `sync/build.md`), and not the error history (that is `debug/errors-log.md`), but the "what and why" of each piece of work: what was built, how it works, which decisions were made, and anything a future reader needs to understand the project.
+Everything that gets done on this project gets documented here. Not the running record (that is `sync/progress.md`), and not the error history (that is `debug/errors-log.md`), but the "what and why" of each piece of work: what was built, how it works, which decisions were made, and anything a future reader needs to understand the project.
 
 Rules for the building agent:
 - After building a page or feature, write its documentation here before you report back. A short, honest write-up is enough; work nobody can understand later is a liability.

@@ -1,0 +1,6 @@
+{
+  "name": "Autonova",
+  "description": "Autonova web interface and services showcase",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

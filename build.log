@@ -1,0 +1,25 @@
+$ next build
+▲ Next.js 16.3.4 (Turbopack)
+✓ Running next.config.ts took 394ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 30.8s
+  Running TypeScript ...
+✓ Finished filesystem cache database compaction in 12.5s
+  Finished TypeScript in 58s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/3) ...
+✓ Generating static pages using 1 worker (3/3) in 2.1s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+$ node scripts/copy-standalone-assets.mjs
+[copy-standalone] /home/moses/autonova/.next/static -> /home/moses/autonova/.next/standalone/.next/static
+[copy-standalone] /home/moses/autonova/public -> /home/moses/autonova/.next/standalone/public
+[copy-standalone] done

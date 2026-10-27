@@ -43,3 +43,12 @@ next-env.d.ts
 # Windows Zone.Identifier sidecar artifacts
 *.Zone.Identifier
 *Zone.Identifier
+
+# local third-party reference export (not part of the app)
+/huly
+
+# browser/MCP tooling artifacts
+/.playwright-mcp
+
+# local notes that contain credentials
+/Stitch Connection.md

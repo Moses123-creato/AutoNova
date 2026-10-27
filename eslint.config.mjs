@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archived third-party React Bits sources kept for reference, not shipped.
+    "react-bits/**",
+    // Owner-supplied design references. These hold source snippets that are
+    // read and ported, not imported by the app.
+    "design/**",
+    // Exported reference site kept for comparison, not part of the app build.
+    "huly/**",
   ]),
 ]);
 

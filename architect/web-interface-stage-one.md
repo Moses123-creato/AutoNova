@@ -10,10 +10,13 @@ Stage one of Autonova: the public web interface. Four pages, a shared shell, no 
 
 - Single Next.js app (App Router) under `src/`.
 - Routes: `/` (Home), `/services`, `/about`, `/contact` (nav label "Let's Talk"). Everything else is out of scope for stage one.
-- `src/app/layout.tsx` — root shell: fonts (Geist), metadata, TooltipProvider wrapper. A shared header/nav and footer will be added as feature components and included in the layout.
-- `src/components/ui/` — shadcn base-nova component kit (button, card, input, label, badge, separator, dropdown-menu, avatar, tabs, skeleton, sheet, navigation-menu, tooltip, sonner). Feature components (header, footer, page sections) live in `src/components/`.
+- `src/app/layout.tsx` — root shell: Google Fonts (`Orbitron`, `Rajdhani`, `Inter`), dark theme default, metadata.
+- `src/components/navbar.tsx` — Floating liquid-metal capsule navbar with dual-rim chrome highlights, responsive brand mark, route links, and "Let's Talk" CTA.
+- `src/components/hero.tsx` — Homepage hero section reproducing the 00:00–00:06 hero sequence of `hompage design video.mp4` with integrated `3d element.gif` (in `public/3d-element.gif`), live HUD telemetry chip, liquid metal headlines, and action CTAs.
+- `src/components/ui/` — shadcn base-nova component kit (button, card, input, label, badge, separator, dropdown-menu, avatar, tabs, skeleton, sheet, navigation-menu, tooltip, sonner).
 - `src/lib/utils.ts` — `cn` helper.
-- `globals.css` — Tailwind v4 theme: CSS variables, neutral base, dark mode via `.dark`.
+- `globals.css` — Tailwind v4 theme: CSS font variables, liquid metal chrome gradient utilities, and dark mode background (#030507).
+
 
 ## Boundaries
 
